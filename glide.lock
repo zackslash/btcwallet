@@ -1,8 +1,8 @@
-hash: 2fe59efc96b0a2839297653da88cde89208f8f8cf4ced2bb1e828def57e3611b
-updated: 2017-07-19T11:33:58.0769452-04:00
+hash: 512711ec693270680ff155f5e0297a07cfd64af36020265d0af3759504a92637
+updated: 2017-12-29T21:51:44.850219Z
 imports:
 - name: github.com/boltdb/bolt
-  version: 583e8937c61f1af6513608ccc75c97b6abdf4ff9
+  version: 2f1ce7a837dcb8da3ec595b1dac9d0632f0f99e8
 - name: github.com/btcsuite/btcd
   version: 47885ab8702485be6b6f87a03d4f3be0bc5c982c
   subpackages:
@@ -39,11 +39,18 @@ imports:
   - ssh/terminal
 - name: github.com/btcsuite/websocket
   version: 31079b6807923eb23992c421b114992b95131b55
+- name: github.com/davecgh/go-spew
+  version: 346938d642f2ec3594ed81d874461961cd0faa76
+  subpackages:
+  - spew
 - name: github.com/golang/protobuf
-  version: fec3b39b059c0f88fa6b20f5ed012b1aa203a8b4
+  version: ab9f9a6dab164b7d1246e0e688b0ab7b94d8553e
   subpackages:
   - proto
+  - ptypes
   - ptypes/any
+  - ptypes/duration
+  - ptypes/timestamp
 - name: github.com/jessevdk/go-flags
   version: 1679536dcc895411a9f5848d9a0250be7856448c
 - name: github.com/jrick/logrotate
@@ -51,11 +58,11 @@ imports:
   subpackages:
   - rotator
 - name: golang.org/x/crypto
-  version: 84f24dfdf3c414ed893ca1b318d0045ef5a1f607
+  version: 9419663f5a44be8b34ca85f08abc5fe1be11f8a3
   subpackages:
   - ripemd160
 - name: golang.org/x/net
-  version: 8663ed5da4fd087c3cfb99a996e628b72e2f0948
+  version: 66aacef3dd8a676686c7ae3716979581e8b03c47
   subpackages:
   - context
   - http2
@@ -65,38 +72,41 @@ imports:
   - lex/httplex
   - trace
 - name: golang.org/x/sys
-  version: cd2c276457edda6df7fb04895d3fd6a6add42926
+  version: ab9e364efd8b52800ff7ee48a9ffba4e0ed78dfb
   subpackages:
   - unix
 - name: golang.org/x/text
-  version: 6353ef0f924300eea566d3438817aa4d3374817e
+  version: 18c65dde6afd36dbc39197ca72008895b8dfbfb6
   subpackages:
   - secure/bidirule
   - transform
   - unicode/bidi
   - unicode/norm
 - name: google.golang.org/genproto
-  version: 411e09b969b1170a9f0c467558eb4c4c110d9c77
+  version: ee236bd376b077c7a89f260c026c4735b195e459
   subpackages:
   - googleapis/rpc/status
 - name: google.golang.org/grpc
-  version: b15215fb911b24a5d61d57feec4233d610530464
+  version: e687fa4e6424368ece6e4fe727cea2c806a0fcb4
   subpackages:
+  - balancer
+  - balancer/roundrobin
   - codes
+  - connectivity
   - credentials
-  - grpclb/grpc_lb_v1
+  - encoding
+  - grpclb/grpc_lb_v1/messages
   - grpclog
   - internal
   - keepalive
   - metadata
   - naming
   - peer
+  - resolver
+  - resolver/dns
+  - resolver/passthrough
   - stats
   - status
   - tap
   - transport
-testImports:
-- name: github.com/davecgh/go-spew
-  version: 346938d642f2ec3594ed81d874461961cd0faa76
-  subpackages:
-  - spew
+testImports: []
