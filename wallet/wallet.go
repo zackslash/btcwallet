@@ -22,9 +22,9 @@ import (
 	"github.com/btcsuite/btcd/btcjson"
 	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/btcsuite/btcd/chaincfg/chainhash"
+	"github.com/btcsuite/btcd/rpcclient"
 	"github.com/btcsuite/btcd/txscript"
 	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcrpcclient"
 	"github.com/btcsuite/btcutil"
 	"github.com/btcsuite/btcutil/hdkeychain"
 	"github.com/btcsuite/btcwallet/chain"
@@ -1127,7 +1127,7 @@ func (w *Wallet) GetTransactions(startBlock, endBlock *BlockIdentifier, cancel <
 	// TODO: Fetching block heights by their hashes is inherently racy
 	// because not all block headers are saved but when they are for SPV the
 	// db can be queried directly without this.
-	var startResp, endResp btcrpcclient.FutureGetBlockVerboseResult
+	var startResp, endResp rpcclient.FutureGetBlockVerboseResult
 	if startBlock != nil {
 		if startBlock.hash == nil {
 			start = startBlock.height
@@ -2024,7 +2024,7 @@ func (w *Wallet) SignTransaction(tx *wire.MsgTx, hashType txscript.SigHashType,
 		// Either it was already signed or we just signed it.
 		// Find out if it is completely satisfied or still needs more.
 		vm, err := txscript.NewEngine(prevOutScript, tx, i,
-			txscript.StandardVerifyFlags, nil)
+			txscript.StandardVerifyFlags, nil, nil, -1)
 		if err == nil {
 			err = vm.Execute()
 		}

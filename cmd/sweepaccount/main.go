@@ -12,9 +12,10 @@ import (
 
 	"github.com/btcsuite/btcd/btcjson"
 	"github.com/btcsuite/btcd/chaincfg/chainhash"
+	"github.com/btcsuite/btcd/rpcclient"
 	"github.com/btcsuite/btcd/txscript"
 	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcrpcclient"
+
 	"github.com/btcsuite/btcutil"
 	"github.com/btcsuite/btcwallet/internal/cfgutil"
 	"github.com/btcsuite/btcwallet/netparams"
@@ -185,7 +186,7 @@ func makeInputSource(outputs []btcjson.ListUnspentResult) txauthor.InputSource {
 // makeDestinationScriptSource creates a ChangeSource which is used to receive
 // all correlated previous input value.  A non-change address is created by this
 // function.
-func makeDestinationScriptSource(rpcClient *btcrpcclient.Client, accountName string) txauthor.ChangeSource {
+func makeDestinationScriptSource(rpcClient *rpcclient.Client, accountName string) txauthor.ChangeSource {
 	return func() ([]byte, error) {
 		destinationAddress, err := rpcClient.GetNewAddress(accountName)
 		if err != nil {
@@ -213,7 +214,7 @@ func sweep() error {
 	if err != nil {
 		return errContext(err, "failed to read RPC certificate")
 	}
-	rpcClient, err := btcrpcclient.New(&btcrpcclient.ConnConfig{
+	rpcClient, err := rpcclient.New(&rpcclient.ConnConfig{
 		Host:         opts.RPCConnect,
 		User:         opts.RPCUsername,
 		Pass:         rpcPassword,

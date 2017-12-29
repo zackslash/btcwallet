@@ -12,7 +12,8 @@ import (
 	"github.com/btcsuite/btcd/btcjson"
 	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcrpcclient"
+	"github.com/btcsuite/btcd/rpcclient"
+
 	"github.com/btcsuite/btcutil"
 	"github.com/btcsuite/btcwallet/waddrmgr"
 	"github.com/btcsuite/btcwallet/wtxmgr"
@@ -21,8 +22,8 @@ import (
 // RPCClient represents a persistent client connection to a bitcoin RPC server
 // for information regarding the current best block chain.
 type RPCClient struct {
-	*btcrpcclient.Client
-	connConfig        *btcrpcclient.ConnConfig // Work around unexported field
+	*rpcclient.Client
+	connConfig        *rpcclient.ConnConfig // Work around unexported field
 	chainParams       *chaincfg.Params
 	reconnectAttempts int
 
@@ -50,7 +51,7 @@ func NewRPCClient(chainParams *chaincfg.Params, connect, user, pass string, cert
 	}
 
 	client := &RPCClient{
-		connConfig: &btcrpcclient.ConnConfig{
+		connConfig: &rpcclient.ConnConfig{
 			Host:                 connect,
 			Endpoint:             "ws",
 			User:                 user,
@@ -67,7 +68,7 @@ func NewRPCClient(chainParams *chaincfg.Params, connect, user, pass string, cert
 		currentBlock:        make(chan *waddrmgr.BlockStamp),
 		quit:                make(chan struct{}),
 	}
-	ntfnCallbacks := &btcrpcclient.NotificationHandlers{
+	ntfnCallbacks := &rpcclient.NotificationHandlers{
 		OnClientConnected:   client.onClientConnect,
 		OnBlockConnected:    client.onBlockConnected,
 		OnBlockDisconnected: client.onBlockDisconnected,
@@ -76,7 +77,7 @@ func NewRPCClient(chainParams *chaincfg.Params, connect, user, pass string, cert
 		OnRescanFinished:    client.onRescanFinished,
 		OnRescanProgress:    client.onRescanProgress,
 	}
-	rpcClient, err := btcrpcclient.New(client.connConfig, ntfnCallbacks)
+	rpcClient, err := rpcclient.New(client.connConfig, ntfnCallbacks)
 	if err != nil {
 		return nil, err
 	}
@@ -409,8 +410,8 @@ out:
 }
 
 // POSTClient creates the equivalent HTTP POST btcrpcclient.Client.
-func (c *RPCClient) POSTClient() (*btcrpcclient.Client, error) {
+func (c *RPCClient) POSTClient() (*rpcclient.Client, error) {
 	configCopy := *c.connConfig
 	configCopy.HTTPPostMode = true
-	return btcrpcclient.New(&configCopy, nil)
+	return rpcclient.New(&configCopy, nil)
 }

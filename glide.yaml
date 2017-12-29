@@ -11,8 +11,8 @@ import:
   - chaincfg/chainhash
   - txscript
   - wire
+  - rpcclient
 - package: github.com/btcsuite/btclog
-- package: github.com/btcsuite/btcrpcclient
 - package: github.com/btcsuite/btcutil
   subpackages:
   - hdkeychain
